@@ -19,8 +19,7 @@ import { CommomService } from '../services/commom.service';
 export class CustomLayoutComponent implements OnInit {
 
   sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
-  isFooterVisible$ = false;
-  // isFooterVisible$ = this.configService.config$.pipe(map(config => config.footer.visible));
+  isFooterVisible$ = this.configService.config$.pipe(map(config => config.footer.visible));
   isDesktop$ = this.layoutService.isDesktop$;
 
   toolbarShadowEnabled$ = this.router.events.pipe(
