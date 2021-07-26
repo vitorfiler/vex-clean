@@ -19,7 +19,8 @@ import { CommomService } from '../services/commom.service';
 export class CustomLayoutComponent implements OnInit {
 
   sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
-  isFooterVisible$ = this.configService.config$.pipe(map(config => config.footer.visible));
+  isFooterVisible$ = false;
+  // isFooterVisible$ = this.configService.config$.pipe(map(config => config.footer.visible));
   isDesktop$ = this.layoutService.isDesktop$;
 
   toolbarShadowEnabled$ = this.router.events.pipe(
@@ -40,6 +41,6 @@ export class CustomLayoutComponent implements OnInit {
     this.layoutService.configpanelOpen$.pipe(
       untilDestroyed(this)
     ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
-    this.router.navigate(['unidades']);
+    this.router.navigate(['/']);
   }
 }

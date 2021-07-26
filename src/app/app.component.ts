@@ -83,12 +83,12 @@ export class AppComponent implements OnInit{
       filter(queryParamMap => queryParamMap.has('style'))
     ).subscribe(queryParamMap => this.styleService.setStyle(queryParamMap.get('style') as Style));
     this.navigationService.items = [
-      {
-        label: 'Item 1',
-        type: 'link',
-        route: '/dashboard',
-        icon: icLayers
-      },
+      // {
+      //   label: 'agenda',
+      //   type: 'link',
+      //   route: '/agenda',
+      //   icon: icLayers
+      // },
       {
         label: 'Item 2',
         type: 'link',

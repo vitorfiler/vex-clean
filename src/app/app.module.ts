@@ -33,7 +33,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { GaugeModule, NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { LoginFinalComponent } from './pages/login-final/login-final.component';
-
+import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarModule } from './pages/login-final/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,11 @@ import { LoginFinalComponent } from './pages/login-final/login-final.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CalendarModule,
+    AngularCalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     BrowserAnimationsModule,
     HttpClientModule,
     MatFormFieldModule,

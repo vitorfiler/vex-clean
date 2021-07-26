@@ -7,7 +7,7 @@ export const environment = {
   hmr       : false,
   URL_API: "",
   URL_AWS: "",
-  URL_LOGIN: "http://localhost:8080/login",
+  URL_LOGIN: "http://localhost:8081/login",
   ambiente: "dsv",
 
   comparacaoFaturas: "/comparacaov2",
