@@ -90,22 +90,28 @@ export class AppComponent implements OnInit{
       //   icon: icLayers
       // },
       {
-        label: 'Item 2',
+        label: 'Pacientes',
         type: 'link',
-        route: '/unidades',
+        route: '/pacientes',
         icon: icAssigment
         
       },
       {
-        label: 'Item 3',
+        label: 'Médicos',
         type: 'link',
-        route: '/financeiro',
+        route: '/',
         icon: icContactSupport
       },
       {
-        label: 'Item 4',
+        label: 'Medicamentos',
         type: 'link',
-        route: '/credito-gd',
+        route: '/',
+        icon: icDateRange
+      },
+      {
+        label: 'Prescrições',
+        type: 'link',
+        route: '/',
         icon: icDateRange
       }
     ];

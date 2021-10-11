@@ -32,21 +32,25 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GaugeModule, NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxGaugeModule } from 'ngx-gauge';
-import { LoginFinalComponent } from './pages/login-final/login-final.component';
+import { LoginComponent } from './pages/login/login.component';
 import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarModule } from './pages/login-final/calendar/calendar.module';
+import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { CadastroPacienteComponent } from './pages/cadastro-paciente/cadastro-paciente.component';
+import { ScrollbarModule } from 'src/@vex/components/scrollbar/scrollbar.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFinalComponent
+    LoginComponent,
+    PacientesComponent,
+    CadastroPacienteComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CalendarModule,
     AngularCalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -57,6 +61,8 @@ import { CalendarModule } from './pages/login-final/calendar/calendar.module';
     MatSelectModule,
     MatIconModule,
     GaugeModule,
+    ScrollbarModule,
+    MatProgressBarModule,
     NgxGaugeModule,
     ReactiveFormsModule,
     MatCardModule,

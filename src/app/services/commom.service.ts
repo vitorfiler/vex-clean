@@ -9,84 +9,46 @@ import { LoginService } from './login.service';
 
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class CommomService {
 
-  constructor(private http: HttpClient,
-              private route: Router,
-              private snackBar: MatSnackBar,
-              private loginService: LoginService
-    ) { }
+	constructor(private http: HttpClient,
+		private route: Router,
+		private snackBar: MatSnackBar,
+		private loginService: LoginService
+	) { }
+	
+	token = localStorage.getItem("token")
+	headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'})
+	headersGet: HttpHeaders = new HttpHeaders({ 'Authorization': this.token})
+	url: String = '/uc'
 
-headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
-url: String = '/uc'
-  logout(){
-    localStorage.clear();
-    this.route.navigate(['/login']);
-  }
+	logout() {
+		localStorage.clear();
+		this.route.navigate(['/login']);
+	}
 
-  getUnidadesConsumidoras(clientId: string): Observable<any>{
-    return this.http.get(`${environment.URL_AWS}${this.url}`, {
-      params: {
-        clienteID: clientId,
-      },
-      observe: "response",
-  })
-  }
+	getPacientes(): Observable<any> {
+		return this.http.get(`${environment.URL_API}/buscarTodos`, { observe: "response", headers: this.headersGet});
+	}
 
-  // get(urlName: string): Observable<any>{
-  //    return this.http.get(`${environment.url}${urlName}`,{observe: "response"});
+	cadastrarPaciente(string: string): Observable<any> {
+		return this.http.post(`${environment.URL_API}`, string, { observe: "response", headers: this.headers });
+	}
+	
 
-  // }
-  
-  // post(urlName: string, body: string): Promise<any> {
+	// put(urlName: string, body: string, clientId: string): Observable<any> {
+	//   return this.http.put(`${environment.url}${urlName}`, body, { params: {
+	//     clienteID: clientId, }, observe: "response", headers: this.headers });
+	// }
 
-  //   let promise = this.http.post(`${environment.url}${urlName}`, body, { observe: "response", headers: this.headers }).toPromise();
-  //   return promise
-  // }
+	// delete(urlName: string): Promise<any> {
+	//   let promise = this.http.get(`${environment.url}${urlName}`, { observe: "response", headers: this.headers }).toPromise();
+	//   return promise
+	// }
 
-  // postMokoon(urlName: string, string: string): Observable<any>{
-  //   return this.http.post(`${environment.url}${urlName}`, string, { observe: "response", headers: this.headers });
-  // }
-
-  // put(urlName: string, body: string, clientId: string): Observable<any> {
-  //   return this.http.put(`${environment.url}${urlName}`, body, { params: {
-  //     clienteID: clientId, }, observe: "response", headers: this.headers });
-  // }
-
-  // delete(urlName: string): Promise<any> {
-  //   let promise = this.http.get(`${environment.url}${urlName}`, { observe: "response", headers: this.headers }).toPromise();
-  //   return promise
-  // }
-
-  // public upload(formData): Promise<any> {
-
-  //   return this.http.post<any>(`${environment.url}/Arquivos`, formData, {
-  //     reportProgress: true,
-  //     observe: 'response'
-  //   }).toPromise();
-  // }
-
-  showMessage(msg: string, isError: boolean = false): void {
-    this.snackBar.open(msg, "X", {
-      duration: 3000,
-      horizontalPosition: "right",
-      verticalPosition: "top",
-      panelClass: isError ? ["msg-error"] : ["msg-success"],
-    });
-  }
-
-  validaSessao(){
-    return this.loginService.validaSessao();  
-  }
-  
-  formatDate(date: Date){
-    let day: string = date.getDate().toString();
-    day = +day < 10 ? '0' + day : day;
-    let month: string = (date.getMonth() + 1).toString();
-    month = +month < 10 ? '0' + month : month;
-    let year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
+	validaSessao() {
+		return this.loginService.validaSessao();
+	}
 }

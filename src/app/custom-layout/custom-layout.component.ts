@@ -33,13 +33,12 @@ export class CustomLayoutComponent implements OnInit {
   constructor(private commomService: CommomService,
     private layoutService: LayoutService,
     private configService: ConfigService,
-    private breakpointObserver: BreakpointObserver,
     private router: Router) { }
 
   ngOnInit() {
     this.layoutService.configpanelOpen$.pipe(
       untilDestroyed(this)
     ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
-    this.router.navigate(['/']);
+    this.router.navigate(['/pacientes']);
   }
 }

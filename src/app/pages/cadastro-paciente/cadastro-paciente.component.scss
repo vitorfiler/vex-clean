@@ -1,0 +1,28 @@
+@media screen and (max-width: 500px) {
+    .example-viewport {
+      margin: auto;
+      height: 600px;
+      width: 330px;
+    }
+  }
+  
+@media screen and (min-width: 500px) {
+  .example-viewport {
+    margin: auto;
+    height: 40%;
+    width: 350px;
+  }
+}
+
+.estilo{
+  background: url('/assets/images/backgrounds/fundo.jpg') no-repeat;
+  background-size: cover;
+
+}
+
+.align-card{
+  margin-top: 2%; 
+  margin-bottom: 2%;
+  margin-left: 25%;
+  margin-right: 25%;
+}

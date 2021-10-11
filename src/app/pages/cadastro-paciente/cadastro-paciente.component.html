@@ -1,0 +1,81 @@
+<div class="w-full h-full bg-pattern estilo" fxLayout="column" fxLayoutAlign="center center">
+    <div @fadeInUp class="card overflow-hidden w-full max-w-2xl align-card">
+        <!-- <mat-progress-bar *ngIf="cadastrando" mode="indeterminate" color="primary"></mat-progress-bar> -->
+        <vex-scrollbar [@stagger]="10" class="p-4 flex-auto">
+            <div class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
+                <div class="fill-current text-center">
+                    <img class="w-200" src="assets/images/logos/logo.png">
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h2 class="title m-0">Crie sua conta </h2>
+                <h4 class="body-2 text-secondary m-0">Preencha o formulário com as informações do paciente.
+                </h4>
+            </div>
+
+            <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
+                <div fxFlex="auto" fxLayout="column">
+                    <mat-form-field fxFlex="grow" appearance="outline">
+                        <mat-label>CPF</mat-label>
+                        <input mask="000.000.000-00" formControlName="cpf" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="grow" appearance="outline">
+                        <mat-label>Nome Completo</mat-label>
+                        <input formControlName="nome" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="grow" appearance="outline">
+                        <mat-label>Telefone</mat-label>
+                        <input formControlName="telefone" matInput required>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sexo</mat-label>
+                        <mat-select formControlName="sexo">
+                            <mat-option value="M">Masculino</mat-option>
+                            <mat-option value="F">Feminino</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" -->
+                    <mat-form-field fxFlex="grow" appearance="outline">
+                        <mat-label>Senha</mat-label>
+                        <!-- pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" -->
+                        <input [type]="inputType"
+                            formControlName="senha" matInput required>
+                        <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility"
+                            type="button">
+                            <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+                            <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+                        </button>
+                        <mat-error *ngIf="form.get('senha').hasError('pattern')">Mínimo de seis caracteres, pelo menos
+                            uma letra e um número</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="grow" appearance="outline">
+                        <mat-label>Confirmar Senha</mat-label>
+                        <input [type]="inputType" formControlName="ConfirmarSenha" matInput required>
+                        <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility"
+                            type="button">
+                            <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+                            <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+                        </button>
+                        <!-- <mat-error *ngIf="form.hasError('passwordsNotEqual')" >As senhas não coincidem</mat-error>   -->
+                        <mat-hint>Por favor repita sua senha</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <button style="background-color: #000C6F; color: white;" [disabled]="form.invalid" (click)="cadastrar()"
+                    color="primary" mat-raised-button type="button">
+                    Criar Conta
+                </button>
+                <p class="text-secondary text-center">
+                    Já possui uma conta?<br />
+                    <u><a href="/login">Faça login</a></u>
+                </p>
+            </div>
+        </vex-scrollbar>
+    </div>
+</div>

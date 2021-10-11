@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
 import { VexRoutes } from 'src/@vex/interfaces/vex-route.interface';
 
-import { LoginFinalComponent } from './pages/login-final/login-final.component';
-import { CalendarComponent } from './pages/login-final/calendar/calendar.component';
+import { LoginComponent } from './pages/login/login.component';
+import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { CadastroPacienteComponent } from './pages/cadastro-paciente/cadastro-paciente.component';
 
 
 const routes: VexRoutes = [
@@ -12,10 +13,11 @@ const routes: VexRoutes = [
     path: '',
     component: CustomLayoutComponent,
     children: [
-      { path: 'agenda', component: CalendarComponent }
+      { path: 'pacientes', component: PacientesComponent },
     ],
   },
-  { path: 'login', component: LoginFinalComponent }
+  { path: 'cad-paciente', component: CadastroPacienteComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
