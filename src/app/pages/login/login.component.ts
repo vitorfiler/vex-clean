@@ -10,15 +10,17 @@ import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { Observable } from 'rxjs';
 import { fadeInUp400ms } from 'src/@vex/animations/fade-in-up.animation';
 import { stagger20ms } from 'src/@vex/animations/stagger.animation';
+import { EventEmitterService } from 'src/app/services/event.service';
+import { MessagesSnackBar } from 'src/app/constants/messagesSnackBar';
 
 @Component({
   selector: 'vex-login-final',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-	animations: [
-		fadeInUp400ms,
-		stagger20ms
-	]
+  animations: [
+    fadeInUp400ms,
+    stagger20ms
+  ]
 })
 export class LoginComponent implements OnInit {
 
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
   arrowBack = arrowBack;
   inputType = 'password';
   visible = false;
-  nomeUrl =  '';
+  nomeUrl = '';
 
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
@@ -36,31 +38,35 @@ export class LoginComponent implements OnInit {
   consumo: any = [];
 
   constructor(private router: Router,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private snackbar: MatSnackBar,
-              private commomService: CommomService,
-              private loginService: LoginService,
-  ) {}
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private snackbar: MatSnackBar,
+    private commomService: CommomService,
+    private loginService: LoginService,
+  ) { }
 
-  login(){
+  login() {
     let username = this.form.get('email').value
     let password = this.form.get('password').value
     return this.loginService
-    .login(username, password)
-    .subscribe((response) => {
-      localStorage.setItem("currentUser", JSON.stringify(response.nome))
-      localStorage.setItem("token", response.body.token)
-      this.router.navigate(['/']);
-        })
-}
+      .login(username, password)
+      .subscribe((response) => {
+        localStorage.setItem("currentUser", JSON.stringify(response.body.usuario))
+        localStorage.setItem("token", response.body.token)
+		    setTimeout(() => {this.router.navigate(['/pacientes'])}, 200);
+      },(error) => {
+				console.log(error.message);
+				// this.cadastrando = false;
+				this.snackbar.open(MessagesSnackBar.LOGIN_ERRO, 'Fechar', { duration: 4000 });
+			})
+  }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.form = this.fb.group({
-        email: ["", [Validators.required]],
-        password: ["", Validators.required],
+      email: ["", [Validators.required]],
+      password: ["", Validators.required],
     });
-}
+  }
 
   toggleVisibility() {
     if (this.visible) {

@@ -1,16 +1,17 @@
 <div class="w-full h-full estilo" fxLayout="column" fxLayoutAlign="center center">
-    <div @fadeInUp class="card overflow-hidden w-full max-w-xs">
+  <div style="margin-top: 2%; margin-bottom: 2%;" @fadeInUp class="card overflow-hidden w-full max-w-xs">
+    <vex-scrollbar [@stagger]="10" class="p-4 flex-auto">
       <div class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
         <div class="fill-current text-center">
           <img class="w-200" src="assets/images/logos/logo.png">
         </div>
       </div>
-  
+
       <div class="text-center mt-4">
         <h2 class="title m-0">Bem vindo de Volta</h2>
         <h4 class="body-2 text-secondary m-0">Entre com suas credenciais.</h4>
       </div>
-  
+
       <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
         <div fxFlex="auto" fxLayout="column">
           <mat-form-field fxFlex="grow" appearance="outline">
@@ -29,16 +30,16 @@
             <mat-error *ngIf="form.get('password').hasError('required')">A senha é um campo Obrigatório</mat-error>
           </mat-form-field>
         </div>
-  
+
         <button color="primary" (click)="login()" mat-raised-button type="button">
           Entrar
         </button>
-  
+
         <p class="text-secondary text-center">
-         Não possui uma conta?<br/>
-          <a [routerLink]="['/cad-paciente']" ><u> Clique aqui para Criar uma </u></a>
+          Não possui uma conta?<br />
+          <a [routerLink]="['/cad-usuario']"><u> Clique aqui para Criar uma </u></a>
         </p>
       </div>
-    </div>
+    </vex-scrollbar>
   </div>
-  
+</div>

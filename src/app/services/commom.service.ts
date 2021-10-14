@@ -15,38 +15,72 @@ export class CommomService {
 
 	constructor(private http: HttpClient,
 		private route: Router,
-		private snackBar: MatSnackBar,
 		private loginService: LoginService
 	) { }
-	
+
 	token = localStorage.getItem("token")
-	headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'})
-	headersGet: HttpHeaders = new HttpHeaders({ 'Authorization': this.token})
-	url: String = '/uc'
+	// .replace('"',"").replace('"',"")
+	headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
+	headersToken: HttpHeaders = new HttpHeaders({ 'Authorization': this.token })
 
 	logout() {
 		localStorage.clear();
 		this.route.navigate(['/login']);
 	}
 
+	getMedicos(): Observable<any>{
+		return this.http.get(`${environment.URL_API}/medico/todos`, { observe: "response", headers: this.headersToken });
+	}
+
+	getEstadosBr(){
+		return this.http.get("/src/app/_utils/cidades-estados/estados.json")
+	}
+
 	getPacientes(): Observable<any> {
-		return this.http.get(`${environment.URL_API}/buscarTodos`, { observe: "response", headers: this.headersGet});
+		return this.http.get(`${environment.URL_API}/paciente/todos`, { observe: "response", headers: this.headersToken });
 	}
 
-	cadastrarPaciente(string: string): Observable<any> {
-		return this.http.post(`${environment.URL_API}`, string, { observe: "response", headers: this.headers });
+	getPaciente(pacienteId: string): Observable<any> {
+		return this.http.get(`${environment.URL_API}/paciente`,{ params: {
+			id: pacienteId}, observe: "response", headers: this.headersToken });
+    }
+
+	filtrar(filtro: string): Observable<any> {
+		return this.http.get(`${environment.URL_API}/paciente/filtro`,{ params: {
+			filtro: filtro}, observe: "response", headers: this.headersToken });
+    }
+
+	cadastrarUsuario(body: string): Observable<any> {
+		return this.http.post(`${environment.URL_API}/usuario`, body, { observe: "response", headers: this.headers });
 	}
-	
 
-	// put(urlName: string, body: string, clientId: string): Observable<any> {
-	//   return this.http.put(`${environment.url}${urlName}`, body, { params: {
-	//     clienteID: clientId, }, observe: "response", headers: this.headers });
-	// }
+	cadastrarPaciente(body: string): Observable<any> {
+		return this.http.post(`${environment.URL_API}/paciente`, body, { observe: "response", headers: this.headersToken });
+	}
 
-	// delete(urlName: string): Promise<any> {
-	//   let promise = this.http.get(`${environment.url}${urlName}`, { observe: "response", headers: this.headers }).toPromise();
-	//   return promise
-	// }
+	cadastrarMedico(body: string): Observable<any> {
+		return this.http.post(`${environment.URL_API}/medico`, body, { observe: "response", headers: this.headersToken });
+	}
+
+	atualizarPaciente(body: string): Observable<any> {
+		return this.http.put(`${environment.URL_API}/paciente`, body, { observe: "response", headers: this.headersToken });
+	}
+
+	consultaCep(cep: string): Observable<any> {
+		this.headers.set('Access-Control-Allow-Origin', '*');
+		this.http.get(`https://cors-anywhere.herokuapp.com//viacep.com.br/ws/88058400/json`);
+		return this.http.get(`http://viacep.com.br/ws/${cep}/json`, { observe: "response", headers: this.headers });
+	}
+
+	deletePaciente(id: string): Observable<any> {
+		return this.http.delete(`${environment.URL_API}/paciente`, {
+			params: {
+				id: id,
+			},
+			observe: "response",
+			headers: this.headersToken
+		})
+	}
 
 	validaSessao() {
 		return this.loginService.validaSessao();

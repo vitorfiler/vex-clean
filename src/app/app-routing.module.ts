@@ -5,6 +5,7 @@ import { VexRoutes } from 'src/@vex/interfaces/vex-route.interface';
 
 import { LoginComponent } from './pages/login/login.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { CadastroUsuarioComponent } from './pages/cadastro-usuario/cadastro-usuario.component';
 import { CadastroPacienteComponent } from './pages/cadastro-paciente/cadastro-paciente.component';
 
 
@@ -14,9 +15,10 @@ const routes: VexRoutes = [
     component: CustomLayoutComponent,
     children: [
       { path: 'pacientes', component: PacientesComponent },
+      { path: 'cad-paciente', component: CadastroPacienteComponent }
     ],
   },
-  { path: 'cad-paciente', component: CadastroPacienteComponent },
+  { path: 'cad-usuario', component: CadastroUsuarioComponent },
   { path: 'login', component: LoginComponent }
 ];
 

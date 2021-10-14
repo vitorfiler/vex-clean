@@ -36,17 +36,18 @@ import { LoginComponent } from './pages/login/login.component';
 import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
-import { CadastroPacienteComponent } from './pages/cadastro-paciente/cadastro-paciente.component';
+import { CadastroUsuarioComponent } from './pages/cadastro-usuario/cadastro-usuario.component';
 import { ScrollbarModule } from 'src/@vex/components/scrollbar/scrollbar.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CadastroPacienteComponent } from './pages/cadastro-paciente/cadastro-paciente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PacientesComponent,
+    CadastroUsuarioComponent,
     CadastroPacienteComponent
-
   ],
   imports: [
     BrowserModule,

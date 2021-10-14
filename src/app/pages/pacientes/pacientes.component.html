@@ -1,42 +1,53 @@
 <div class="tela">
-    <h2><strong>Acompanhar envios</strong></h2>
   
-    <p>Consulte a situação dos arquivos enviados. Para mais informações sobre arquivos rejeitados, clique em ”Detalhes”..
-    </p>
-  
-  
-    <div class="container mat-elevation-z8">
-      <!-- <div class="row" >
-        <div class="col-sm-3">
-          <mat-form-field appearance="outline">
-            <mat-label>Filtrar</mat-label>
-            <input matInput placeholder="filtrar" (keyup)="applyFilter($event.target.value)">
-            <mat-icon [icIcon]="icSearch" matSuffix></mat-icon>
-          </mat-form-field>
-        </div>
-        <div class="col add">
-          <button style="max-height: 37px;" (click)="cadastro()" mat-raised-button color="primary">Cadastrar edifício/condomínio</button>
-        </div>
-      </div> -->
+  <div  class="row" >
+    <div [formGroup]="form" class="col-sm-6">
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>Pesquisar Paciente, CPF ou Médico</mat-label>
+        <input (ngModelChange)="filtrar()" formControlName="filtro" matInput>
+      </mat-form-field>
+    </div>
+    <div class="col add">
+      <button style="max-height: 37px;" [routerLink]="['/cad-paciente']" mat-raised-button color="primary">Cadastrar Paciente</button>
+    </div>
+  </div>
+    <div *ngIf="pacientes.length > 0" class="mat-elevation-z8">
       
-      <!-- <cdk-virtual-scroll-viewport [itemSize]="18 * 7" class="example-viewport"> -->
-      <mat-table [dataSource]="dataSource" matSort>
+      <mat-table [dataSource]="dataSource">
   
         <ng-container matColumnDef="Nome">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Data do Envio </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
           <mat-cell class="rows"*matCellDef="let row"> {{row.nome || "-"}} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="CPF">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Nome do Arquivo </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
           <mat-cell class="rows" *matCellDef="let row"> {{row.cpf}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="NomeMedico">
+          <mat-header-cell *matHeaderCellDef> Médico </mat-header-cell>
+          <mat-cell class="rows" *matCellDef="let row"> {{row.nomeMedico}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="DtPrescricao">
+          <mat-header-cell *matHeaderCellDef> Ultima Prescição </mat-header-cell>
+          <mat-cell class="rows" *matCellDef="let row"> {{row.dtPrescricao}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+          <mat-cell class="rows" *matCellDef="let row"> 
+            <span *ngIf="row.ativo"> Ativo </span> 
+            <span *ngIf="!row.ativo"> Inativo </span>
+          </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="Acoes">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Ações </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
               <mat-cell class="rows" *matCellDef="let row" [style.color]="row.color">
-                <img style="cursor: pointer; max-width: 25px;" src="../../../assets/edit.png">
-                <img style="cursor: pointer; max-width: 25px; margin-left: 15px;" src="../../../assets/Recycle_Bin_Full.png">
+                <img  (click)="editarPaciente(row.id)" style="cursor: pointer; max-width: 25px;" src="../../../assets/edit.png">
+                <img (click)="deletarPaciente(row.id)" style="cursor: pointer; max-width: 25px; margin-left: 15px;" src="../../../assets/Recycle_Bin_Full.png">
               </mat-cell>
           </ng-container>
   
@@ -46,6 +57,15 @@
       </mat-table>
   
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-      <!-- </cdk-virtual-scroll-viewport> -->
     </div>
+    <div *ngIf="!pacientes.length" class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
+      <div class="fill-current text-center">
+        <img src="../../../assets/user.png" style="max-width: 100px;">
+      </div>
+    </div>
+    <div *ngIf="!pacientes.length" class="text-center mt-4">
+      <h3 class="title m-0">Lista Vazia</h3>
+      <h4 class="body-2 text-secondary m-0">Não existe nenhum paciente com esses dados.</h4>
+    </div>
+
   </div>
