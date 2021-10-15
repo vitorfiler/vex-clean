@@ -20,6 +20,7 @@ import { cidades } from 'src/app/_utils/cidades-estados/cidades';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Cidade } from 'src/app/_models/cidade';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
 	selector: 'vex-cadastro-paciente',
@@ -45,6 +46,15 @@ export class CadastroPacienteComponent implements OnInit {
 	endereco: Endereco = new Endereco();
 	pacienteId: string;
 	result: string;
+	estadosForm = new FormControl();
+	estados: Observable<Estado[]>;
+	optionsEstados: Estado[] = estados;
+	
+	cidadeSelecionada: string;
+
+	cidadesForm = new FormControl();
+	options: Cidade[] = cidades;
+	cidades: Observable<Cidade[]>;
 
 	@ViewChild(ScrollbarComponent, { static: true }) scrollbar: ScrollbarComponent;
 
@@ -52,20 +62,10 @@ export class CadastroPacienteComponent implements OnInit {
 		private cd: ChangeDetectorRef,
 		private fb: FormBuilder,
 		private router: Router,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private snackbar: MatSnackBar
 	) { }
 
-	estadosForm = new FormControl();
-	estados: Observable<Estado[]>;
-	optionsEstados: Estado[] = estados;
-	
-	estadoSelecionado: string = "teste";
-	cidadeSelecionada: string;
-
-	cidadesForm = new FormControl();
-	options: Cidade[] = cidades;
-	cidades: Observable<Cidade[]>;
-  
 	ngOnInit(): void {
 		EventEmitterService.get('salvarMedico').subscribe(() => this.buscarMedicos());
 		this.pacienteId = window.localStorage.getItem("pacienteId");
@@ -73,7 +73,6 @@ export class CadastroPacienteComponent implements OnInit {
 		this.buscarMedicos();
 		this.formVazio();
 		if (this.pacienteId) this.formEditar();
-
 		this.estados = this.estadosForm.valueChanges
 			.pipe(
 				startWith(''),
@@ -91,8 +90,7 @@ export class CadastroPacienteComponent implements OnInit {
 
 	filtro(event){
 		console.log(event.option.value);
-		let estado = event.option.value;
-		this.estadoSelecionado = estado.nome
+		let estado = event.option.value;Uint8Array
 		let cidadesFiltradas = [];
 		cidades.forEach(cidade => {
 			if(cidade.estado === estado.id){
@@ -127,9 +125,11 @@ export class CadastroPacienteComponent implements OnInit {
 
 	consultaCep(cep: string) {
 		this.commomService.consultaCep(cep).subscribe(response => {
-			this.endereco = response.body;
 			this.endereco.cidade = response.body.localidade
 			this.endereco.estado = response.body.uf
+			this.endereco.logradouro = response.body.logradouro
+			this.endereco.logradouro = response.body.logradouro
+			this.endereco.bairro = response.body.bairro
 		})
 	}
 
@@ -186,8 +186,6 @@ export class CadastroPacienteComponent implements OnInit {
 		this.commomService.getPaciente(this.pacienteId).subscribe(response => {
 			this.paciente = response.body;
 			this.endereco = this.paciente.endereco;
-			console.log(this.paciente);
-
 		})
 	}
 
@@ -213,14 +211,18 @@ export class CadastroPacienteComponent implements OnInit {
 	atualizar(body: string) {
 		this.commomService.atualizarPaciente(body).subscribe(() => {
 			this.router.navigate(['/pacientes'])
+			this.snackbar.open(MessagesSnackBar.ATUALIZACAO, 'Fechar', { duration: 4000 });
 		}, (error) => {
 			console.log(error.message);
+			this.snackbar.open(MessagesSnackBar.ATUALIZACAO_ERRO, 'Fechar', { duration: 4000 });
 		})
 	}
 	cadastrar(body: string) {
 		this.commomService.cadastrarPaciente(body).subscribe(() => {
 			this.router.navigate(['/pacientes'])
+			this.snackbar.open(MessagesSnackBar.CADASTRO, 'Fechar', { duration: 4000 });
 		}, (error) => {
+			this.snackbar.open(MessagesSnackBar.CADASTRO_ERRO, 'Fechar', { duration: 4000 });
 			console.log(error.message);
 		})
 	}

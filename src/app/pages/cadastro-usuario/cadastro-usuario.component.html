@@ -19,6 +19,7 @@
                     <mat-form-field fxFlex="grow" appearance="outline">
                         <mat-label>CPF</mat-label>
                         <input mask="000.000.000-00" formControlName="cpf" matInput required>
+                        <mat-hint>Será o seu usuário de acesso</mat-hint>
                     </mat-form-field>
 
                     <mat-form-field fxFlex="grow" appearance="outline">
@@ -67,7 +68,7 @@
                     </mat-form-field>
                 </div>
 
-                <button style="background-color: #000C6F; color: white;" [disabled]="form.invalid" (click)="cadastrar()"
+                <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="cadastrar()"
                     color="primary" mat-raised-button type="button">
                     Criar Conta
                 </button>

@@ -16,7 +16,7 @@
         <div fxFlex="auto" fxLayout="column">
           <mat-form-field fxFlex="grow" appearance="outline">
             <mat-label>Usuário</mat-label>
-            <input formControlName="email" matInput required>
+            <input mask="000.000.000-00" formControlName="email" matInput required>
             <mat-error *ngIf="form.get('email').hasError('required')">o usuário é um campo Obrigatório</mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="grow" appearance="outline">

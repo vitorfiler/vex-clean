@@ -1,130 +1,125 @@
-<div  class="row" >
+<div class="row">
     <!-- <div class="col add">
       <button style="max-height: 37px;" [routerLink]="['/cad-paciente']" mat-raised-button color="primary">Cadastrar Médico</button>
     </div>
   </div> -->
-<div class="w-full h-full bg-pattern" fxLayout="column" fxLayoutAlign="center center">
-    
-    <div @fadeInUp class="card overflow-hidden w-full max-w-2xl align-card">
-        <!-- <mat-progress-bar *ngIf="cadastrando" mode="indeterminate" color="primary"></mat-progress-bar> -->
-        <vex-scrollbar [@stagger]="10" class="p-4 flex-auto">
-            <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
-                <div fxFlex="auto" fxLayout="column">
+    <div class="w-full h-full bg-pattern" fxLayout="column" fxLayoutAlign="center center">
+
+        <div @fadeInUp class="card overflow-hidden w-full max-w-2xl align-card">
+            <!-- <mat-progress-bar *ngIf="cadastrando" mode="indeterminate" color="primary"></mat-progress-bar> -->
+            <vex-scrollbar [@stagger]="10" class="p-4 flex-auto">
+                <div [formGroup]="form" class="p-6" fxLayout="column" fxLayoutGap="16px">
+                    <div fxFlex="auto" fxLayout="column">
+                        <div style="text-align: left;">
+                            <h4 class="body-2 text-secondary m-0">Dados do Paciente: </h4>
+                        </div>
+                        <mat-form-field fxFlex="grow" appearance="outline">
+                            <mat-label>Nome Completo</mat-label>
+                            <input [(ngModel)]="paciente.nome" formControlName="nome" matInput required>
+                        </mat-form-field>
+
+                        <div class="row">
+                            <div class="col">
+                                <mat-form-field fxFlex="grow" appearance="outline">
+                                    <mat-label>CPF</mat-label>
+                                    <input [(ngModel)]="paciente.cpf" mask="000.000.000-00" formControlName="cpf"
+                                        matInput required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <mat-form-field fxFlex="grow" appearance="outline">
+                                    <mat-label>Telefone</mat-label>
+                                    <input [(ngModel)]="paciente.telefone" formControlName="telefone" matInput required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <mat-form-field fxFlex="grow" appearance="outline">
+                                    <mat-label>Médico</mat-label>
+                                    <mat-select [(ngModel)]="paciente.medicoID" formControlName="medico" required>
+                                        <mat-option [value]="medico.id" *ngFor="let medico of medicos">{{medico.nome}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="max-height: 37px;" (click)="renderizarModal()" mat-raised-button
+                                    color="primary">Cadastrar Médico</button>
+                            </div>
+                        </div>
+
+                        <mat-form-field fxFlex="grow" appearance="outline">
+                            <mat-label>Observação</mat-label>
+                            <textarea [(ngModel)]="paciente.observacao" matInput
+                                formControlName="observacao"></textarea>
+                        </mat-form-field>
+                    </div>
+
                     <div style="text-align: left;">
-                        <h4 class="body-2 text-secondary m-0">Dados do Paciente: </h4>
-                    </div>
-                    <mat-form-field fxFlex="grow" appearance="outline">
-                        <mat-label>Nome Completo</mat-label>
-                        <input [(ngModel)]="paciente.nome" formControlName="nome" matInput required>
-                    </mat-form-field>
-
-                    <div class="row">
-                        <div class="col">
-                            <mat-form-field fxFlex="grow" appearance="outline">
-                                <mat-label>CPF</mat-label>
-                                <input [(ngModel)]="paciente.cpf" mask="000.000.000-00" formControlName="cpf" matInput required>
-                            </mat-form-field>
-                        </div>
-                        <div class="col">
-                            <mat-form-field fxFlex="grow" appearance="outline">
-                                <mat-label>Telefone</mat-label>
-                                <input [(ngModel)]="paciente.telefone" formControlName="telefone" matInput required>
-                            </mat-form-field>
-                        </div>
+                        <h4 class="body-2 text-secondary m-0">Endereço: </h4>
                     </div>
 
                     <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Cep</mat-label>
+                                <input [(ngModel)]="endereco.cep" (change)="consultaCep(endereco.cep)" mask="00000-000"
+                                    formControlName="cep" matInput required>
+                            </mat-form-field>
+                        </div>
                         <div class="col-md-8">
                             <mat-form-field fxFlex="grow" appearance="outline">
-                                <mat-label>Médico</mat-label>
-                                <mat-select [(ngModel)]="paciente.medicoID" formControlName="medico" required >
-                                    <mat-option [value]="medico.id" *ngFor="let medico of medicos">{{medico.nome}}</mat-option>
-                                </mat-select>
+                                <mat-label>Rua</mat-label>
+                                <input [(ngModel)]="endereco.logradouro" formControlName="rua" matInput required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Número</mat-label>
+                                <input [(ngModel)]="endereco.numero" formControlName="numero" matInput required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-8">
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Bairro</mat-label>
+                                <input [(ngModel)]="endereco.bairro" formControlName="bairro" matInput required>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Complemento</mat-label>
+                                <input [(ngModel)]="endereco.complemento" formControlName="complemento" matInput
+                                    required>
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
-                            <button style="max-height: 37px;" (click)="renderizarModal()" mat-raised-button color="primary">Cadastrar Médico</button>
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Estado</mat-label>
+                                <input [(ngModel)]="endereco.estado" formControlName="estado" matInput required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field fxFlex="grow" appearance="outline">
+                                <mat-label>Cidade</mat-label>
+                                <input [(ngModel)]="endereco.cidade" formControlName="cidade" matInput required>
+                            </mat-form-field>
                         </div>
                     </div>
 
-                    <mat-form-field fxFlex="grow" appearance="outline">
-                        <mat-label>Observação</mat-label>
-                        <textarea [(ngModel)]="paciente.observacao" matInput formControlName="observacao"></textarea>
-                      </mat-form-field>
+                    <button mat-raised-button color="primary" [disabled]="form.invalid"
+                        (click)="enviarPaciente(paciente, endereco)" color="primary" type="button">
+                        Cadastrar Paciente
+                    </button>
                 </div>
-
-                <div style="text-align: left;">
-                    <h4 class="body-2 text-secondary m-0">Endereço: </h4>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field fxFlex="grow" appearance="outline">
-                            <mat-label>Cep</mat-label>
-                            <input [(ngModel)]="endereco.cep" (change)="consultaCep(endereco.cep)" mask="00000-000" formControlName="cep" matInput required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-8">
-                        <mat-form-field fxFlex="grow" appearance="outline">
-                            <mat-label>Rua</mat-label>
-                            <input [(ngModel)]="endereco.logradouro" formControlName="rua" matInput required>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field fxFlex="grow" appearance="outline">
-                            <mat-label>Número</mat-label>
-                            <input [(ngModel)]="endereco.numero" formControlName="numero" matInput required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-8">
-                        <mat-form-field fxFlex="grow" appearance="outline">
-                            <mat-label>Bairro</mat-label>
-                            <input [(ngModel)]="endereco.bairro" formControlName="bairro" matInput required>
-                        </mat-form-field>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field fxFlex="grow" appearance="outline">
-                            <mat-label>Complemento</mat-label>
-                            <input [(ngModel)]="endereco.complemento" formControlName="complemento" matInput required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Estado</mat-label>
-                            <input [(ngModel)]="endereco.estado" [value]="estadoSelecionado" type="text" matInput [formControl]="estadosForm" formControlName="estado" [matAutocomplete]="auto">
-                            <mat-autocomplete (optionSelected)="filtro($event)" #auto="matAutocomplete" [displayWith]="displayEstado">
-                              <mat-option (change)="filtro(estado.id)" *ngFor="let estado of estados | async" [value]="endereco.estado || estado.nome">
-                                {{estado.nome}}
-                              </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field>
-                    </div>
-                    <div class="col-md-4">
-
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Cidade</mat-label>
-                            <input type="text" [(ngModel)]="endereco.cidade" formControlName="cidade" matInput [formControl]="cidadesForm" [matAutocomplete]="cidade">
-                            <mat-autocomplete #cidade="matAutocomplete" [displayWith]="displayCidades">
-                              <mat-option *ngFor="let cidade of cidades | async" [value]="cidade.nome">
-                                {{cidade.nome}}
-                              </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field>
-                    </div>
-                </div>
-
-                <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="enviarPaciente(paciente, endereco)"
-                    color="primary" mat-raised-button type="button">
-                    Cadastrar Paciente
-                </button>
-            </div>
-        </vex-scrollbar>
+            </vex-scrollbar>
+        </div>
     </div>
-</div>
