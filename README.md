@@ -1,4 +1,4 @@
-# Projeto Barbearia Web
+# teste técnico
 
 Executar compando 'npm install' dentro da pasta @Vex do projeto
 
